@@ -12,9 +12,9 @@ TrustPay is a peer-to-peer payment platform with escrow functionality designed f
 - [x] Transaction status tracking
 - [x] Refund processing
 - [x] Simple dispute resolution system
-- [ ] Develop a mobile application using React Native
+- [x] Mobile Application
 
-### Frontend (Next.js with TypeScript and Tailwind CSS)
+### Frontend(Web) (Next.js with TypeScript and Tailwind CSS)
 
 - [x] Landing page explaining the service
 - [x] User registration and login pages
@@ -25,7 +25,7 @@ TrustPay is a peer-to-peer payment platform with escrow functionality designed f
 ### Backend (Node.js with Express and TypeScript)
 
 - [x] User authentication API
-- [x] Payment processing API (integrating with Stripe)
+- [ ] Payment processing API (integrating with Stripe)
 - [ ] Escrow management system
 - [ ] Transaction status update API
 - [ ] Refund processing API
@@ -36,9 +36,9 @@ TrustPay is a peer-to-peer payment platform with escrow functionality designed f
 - [x] Transactions table
 - [ ] Escrow holdings table
 
-### Payment Integration
+### Mobile App
 
-- [ ] Integrate with Stripe for payment processing
+- [ ] Develop a mobile application for users to access the platform on-the-go
 
 
 ## How to Use
