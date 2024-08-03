@@ -1,34 +1,85 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TrustPay
 
-## Getting Started
+TrustPay is a peer-to-peer payment platform with escrow functionality designed for online entrepreneurs. It facilitates secure transactions between buyers and sellers by holding funds in escrow until the transaction is complete. The platform includes user registration, secure payment processing, transaction status tracking, refund processing, and a simple dispute resolution system.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Core Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [x] User registration and authentication
+- [x] Secure payment processing
+- [x] Escrow holding functionality
+- [x] Transaction status tracking
+- [x] Refund processing
+- [x] Simple dispute resolution system
+- [ ] Develop a mobile application using React Native
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Frontend (Next.js with TypeScript and Tailwind CSS)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- [x] Landing page explaining the service
+- [x] User registration and login pages
+- [x] Dashboard for transaction history
+- [x] Payment initiation page
+- [x] Transaction status page
 
-## Learn More
+### Backend (Node.js with Express and TypeScript)
 
-To learn more about Next.js, take a look at the following resources:
+- [x] User authentication API
+- [x] Payment processing API (integrating with Stripe)
+- [ ] Escrow management system
+- [ ] Transaction status update API
+- [ ] Refund processing API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Database 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- [x] Users table
+- [x] Transactions table
+- [ ] Escrow holdings table
 
-## Deploy on Vercel
+### Payment Integration
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [ ] Integrate with Stripe for payment processing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## How to Use
+
+### Getting Started
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/edielam/TrustPay.git
+   cd TrustPay
+
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+
+3. **Set up environment variables:**
+   Create a `.env.local` file in the root directory and add your environment variables (e.g., Stripe API keys).
+
+4. **Run the development server:**
+   ```sh
+   npm run dev
+   ```
+
+5. **Open your browser and navigate to:**
+   ```sh
+   http://localhost:3000
+   ```
+
+### API Endpoints
+
+- **User Registration:** POST `/api/register`
+- **User Login:** POST `/api/login`
+- **Initiate Transaction:** POST `/api/transactions`
+- **Update Transaction Status:** POST `/api/transactions/:id/status`
+- **Get Transaction Status:** GET `/api/transactions/:id`
+- **Process Refund:** POST `/api/refund/:id`
+
+## Future Enhancements
+
+- [ ] Implement advanced dispute resolution system
+- [ ] Add multi-currency support
+- [ ] Integrate additional payment gateways
+- [ ] Enhance security measures (e.g., 2FA)
