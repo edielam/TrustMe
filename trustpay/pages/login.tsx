@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import '../app/globals.css'
+import { useRouter } from 'next/router'
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -11,15 +12,30 @@ export default function Login() {
     password: '',
   })
 
+  const router = useRouter();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Here you would typically send the form data to your API
-    console.log('Form submitted:', formData)
-    // Add your login logic here
+
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
+
+    if (response.ok) {
+      const data = await response.json()
+      console.log('Form submitted:', data)
+      // Redirect to the dashboard
+      router.push('/dashboard')
+    } else {
+      const errorData = await response.json()
+      console.error('Error:', errorData.message)
+    }
   }
 
   return (

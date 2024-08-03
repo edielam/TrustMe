@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import '../app/globals.css'
+import { useRouter } from 'next/router'
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -11,16 +12,32 @@ export default function Register() {
     confirmPassword: '',
   })
 
+  const router = useRouter();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Here you would typically send the form data to your API
-    console.log('Form submitted:', formData)
-    // Add your registration logic here
+
+    const response = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
+
+    if (response.ok) {
+      const data = await response.json()
+      console.log('Form submitted:', data)
+      // Redirect to the login
+      router.push('/login')
+    } else {
+      const errorData = await response.json()
+      console.error('Error:', errorData.message)
+    }
   }
+
 
   return (
     <div className="bg-gray-50">
