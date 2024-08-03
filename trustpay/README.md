@@ -70,12 +70,12 @@ TrustPay is a peer-to-peer payment platform with escrow functionality designed f
 
 ### API Endpoints
 
-- **User Registration:** POST `/api/register`
-- **User Login:** POST `/api/login`
-- **Initiate Transaction:** POST `/api/transactions`
-- **Update Transaction Status:** POST `/api/transactions/:id/status`
-- **Get Transaction Status:** GET `/api/transactions/:id`
-- **Process Refund:** POST `/api/refund/:id`
+- **User Registration:** POST `/api/auth/register`
+- **User Login:** POST `/api/auth/login`
+- **Initiate Transaction:** POST `/api/auth/transactions`
+- **Update Transaction Status:** POST `/api/auth/transactions/:id/status`
+- **Get Transaction Status:** GET `/api/auth/transactions/:id`
+- **Process Refund:** POST `/api/auth/refund/:id`
 
 ## Future Enhancements
 
