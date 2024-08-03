@@ -47,7 +47,7 @@ TrustPay is a peer-to-peer payment platform with escrow functionality designed f
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/edielam/TrustPay.git
+   git clone https://github.com/edielam/TrustMe.git
    cd TrustPay
 
 2. **Install dependencies:**
