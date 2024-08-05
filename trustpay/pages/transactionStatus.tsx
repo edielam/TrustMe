@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import '../app/globals.css'
+import Navbar from '@/components/navabr'
 
 // Mock data - replace with actual API call
 const mockTransaction: Transaction = {
@@ -68,9 +69,7 @@ export default function TransactionStatus() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <nav className="bg-white shadow-sm">
-        {/* Navigation bar content (same as in dashboard) */}
-      </nav>
+      <Navbar />
 
       <div className="py-10">
         <header>

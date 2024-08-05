@@ -45,7 +45,7 @@ export default function Register() {
         <title>Register - TrustPay</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+    
       <div className="relative overflow-hidden">
         <header className="relative">
           <div className="bg-gray-900 pt-6">

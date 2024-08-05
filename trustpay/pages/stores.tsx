@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import '../app/globals.css'
+import Navbar from '@/components/navabr';
 
 export default function Stores() {
     interface Store {
@@ -18,9 +19,7 @@ export default function Stores() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <nav className="bg-white shadow-sm">
-        {/* Navigation content (same as in Dashboard) */}
-      </nav>
+      <Navbar activePage="stores" />
 
       <div className="py-10">
         <header>
