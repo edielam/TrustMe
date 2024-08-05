@@ -7,17 +7,15 @@ export default function InitiatePayment() {
   const [formData, setFormData] = useState({
     recipientEmail: '',
     amount: '',
-    description: '',
-    refundableAmount: '',
+    purpose: '',
   })
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Here you would typically send the form data to your API
     console.log('Payment initiated:', formData)
     // Add your payment initiation logic here
   }
@@ -30,7 +28,31 @@ export default function InitiatePayment() {
       </Head>
 
       <nav className="bg-white shadow-sm">
-        {/* Navigation bar content (same as in dashboard) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex">
+              <div className="flex-shrink-0 flex items-center">
+                <Link href="/">
+                  <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="TrustPay" />
+                </Link>
+              </div>
+              <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
+                <Link href="/dashboard" className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                  Dashboard
+                </Link>
+                <Link href="/initiatePayment" className="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                  Transactions
+                </Link>
+                <Link href="/stores" className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                  Stores
+                </Link>
+                <Link href="/settings" className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                  Settings
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </nav>
 
       <div className="py-10">
@@ -40,86 +62,61 @@ export default function InitiatePayment() {
           </div>
         </header>
         <main>
-          <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-              <div className="p-6 bg-white border-b border-gray-200">
+          <div className="max-w-lg mx-auto mt-10 sm:px-6 lg:px-8">
+            <div className="bg-white shadow-md rounded-lg">
+              <div className="px-4 py-5 sm:p-6">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="recipientEmail" className="block text-sm font-medium text-gray-700">
                       Recipient Email
                     </label>
-                    <div className="mt-1">
-                      <input
-                        id="recipientEmail"
-                        name="recipientEmail"
-                        type="email"
-                        required
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        value={formData.recipientEmail}
-                        onChange={handleChange}
-                      />
-                    </div>
+                    <input
+                      id="recipientEmail"
+                      name="recipientEmail"
+                      type="email"
+                      required
+                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      value={formData.recipientEmail}
+                      onChange={handleChange}
+                    />
                   </div>
 
                   <div>
                     <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                      Total Amount ($)
+                      Amount ($)
                     </label>
-                    <div className="mt-1">
-                      <input
-                        id="amount"
-                        name="amount"
-                        type="number"
-                        step="0.01"
-                        required
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        value={formData.amount}
-                        onChange={handleChange}
-                      />
-                    </div>
+                    <input
+                      id="amount"
+                      name="amount"
+                      type="number"
+                      step="0.01"
+                      required
+                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      value={formData.amount}
+                      onChange={handleChange}
+                    />
                   </div>
 
                   <div>
-                    <label htmlFor="refundableAmount" className="block text-sm font-medium text-gray-700">
-                      Refundable Amount ($)
+                    <label htmlFor="purpose" className="block text-sm font-medium text-gray-700">
+                      Purpose
                     </label>
-                    <div className="mt-1">
-                      <input
-                        id="refundableAmount"
-                        name="refundableAmount"
-                        type="number"
-                        step="0.01"
-                        required
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        value={formData.refundableAmount}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <p className="mt-2 text-sm text-gray-500">This is the amount that can be refunded if necessary.</p>
+                    <select
+                      id="purpose"
+                      name="purpose"
+                      required
+                      className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                      value={formData.purpose}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select a purpose</option>
+                      <option value="goods">Goods</option>
+                      <option value="services">Services</option>
+                      <option value="other">Other</option>
+                    </select>
                   </div>
 
-                  <div>
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                      Description
-                    </label>
-                    <div className="mt-1">
-                      <textarea
-                        id="description"
-                        name="description"
-                        rows={3}
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        value={formData.description}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm">
-                      <Link href="/dashboard" className="font-medium text-indigo-600 hover:text-indigo-500">
-                        Cancel and return to dashboard
-                      </Link>
-                    </div>
+                  <div className="flex items-center justify-end">
                     <button
                       type="submit"
                       className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
