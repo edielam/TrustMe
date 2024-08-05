@@ -54,7 +54,7 @@ export default function Dashboard() {
                 </div>
               </div>
               <div className="ml-4 w-1/4 flex flex-col space-y-4">
-                <Link href="/initiatePayment" className="w-full">
+                <Link href="/pay" className="w-full">
                   <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
                     Pay
                   </button>

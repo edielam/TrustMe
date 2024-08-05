@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import '../app/globals.css'
+import Navbar from '@/components/navabr'
 
 export default function Receive() {
   const [username, setUsername] = useState('')
@@ -24,6 +25,7 @@ export default function Receive() {
         <title>Receive Payment - TrustPay</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Navbar activePage="dashboard" />
 
       <nav className="bg-white shadow-sm">
         {/* Navigation content (same as in Dashboard) */}
