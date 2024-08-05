@@ -30,6 +30,24 @@ export async function getDb() {
       FOREIGN KEY (seller_id) REFERENCES users (id),
       FOREIGN KEY (buyer_id) REFERENCES users (id)
     );
+
+    CREATE TABLE IF NOT EXISTS stores (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      name TEXT NOT NULL,
+      unique_id TEXT UNIQUE NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users (id)
+    );
+
+    CREATE TABLE IF NOT EXISTS store_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      store_id INTEGER NOT NULL,
+      name TEXT NOT NULL,
+      price REAL NOT NULL,
+      quantity INTEGER NOT NULL,
+      FOREIGN KEY (store_id) REFERENCES stores (id)
+    );
   `)
 
   return db
