@@ -129,36 +129,42 @@ export default function Stores() {
               >
                 Create New Store
               </button>
-              <div className="bg-white shadow overflow-hidden sm:rounded-md">
-                <ul className="divide-y divide-gray-200">
-                  {stores.map((store) => (
-                    <li key={store.id}>
-                      <div className="px-4 py-4 flex items-center sm:px-6">
-                        <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-                          <div>
-                            <h3 className="text-lg font-medium leading-6 text-gray-900 truncate">{store.name}</h3>
-                            <p className="mt-1 text-sm text-gray-500">ID: {store.unique_id}</p>
+              {isLoading ? (
+                <div className="text-center">Loading stores...</div>
+              ) : stores.length === 0 ? (
+                <div className="text-center text-gray-500">No stores found. Create a new one to get started!</div>
+              ) : (
+                <div className="bg-white shadow overflow-hidden sm:rounded-md">
+                  <ul className="divide-y divide-gray-200">
+                    {stores.map((store) => (
+                      <li key={store.id}>
+                        <div className="px-4 py-4 flex items-center sm:px-6">
+                          <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                              <h3 className="text-lg font-medium leading-6 text-gray-900 truncate">{store.name}</h3>
+                              <p className="mt-1 text-sm text-gray-500">ID: {store.unique_id}</p>
+                            </div>
+                          </div>
+                          <div className="ml-5 flex-shrink-0">
+                            <button
+                              onClick={() => { setEditingStore(store); setIsModalOpen(true); }}
+                              className="mr-2 font-medium text-indigo-600 hover:text-indigo-500"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteStore(store.id)}
+                              className="font-medium text-red-600 hover:text-red-500"
+                            >
+                              Delete
+                            </button>
                           </div>
                         </div>
-                        <div className="ml-5 flex-shrink-0">
-                          <button
-                            onClick={() => { setEditingStore(store); setIsModalOpen(true); }}
-                            className="mr-2 font-medium text-indigo-600 hover:text-indigo-500"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDeleteStore(store.id)}
-                            className="font-medium text-red-600 hover:text-red-500"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </main>
