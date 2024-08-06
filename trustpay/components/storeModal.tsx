@@ -23,12 +23,17 @@ export default function StoreModal({ isOpen, onClose, onSave, store }: StoreModa
   useEffect(() => {
     if (store) {
       setStoreName(store.name);
-      setItems(store.items);
+      setItems(store.items || []); // Use an empty array if store.items is undefined
     } else {
-      setStoreName('');
-      setItems([]);
+      resetForm();
     }
   }, [store]);
+
+  const resetForm = () => {
+    setStoreName('');
+    setItems([]);
+    setNewItem({ name: '', price: 0, quantity: 0 });
+  };
 
   const handleAddItem = () => {
     setItems([...items, newItem]);
@@ -57,13 +62,13 @@ export default function StoreModal({ isOpen, onClose, onSave, store }: StoreModa
           value={storeName}
           onChange={(e) => setStoreName(e.target.value)}
           placeholder="Store Name"
-          className="mb-4 w-full px-3 py-2 border border-gray-300 rounded-md"
+          className="mb-4 w-full px-3 py-2 border border-gray-300 rounded-md text-gray-800"
         />
         <h4 className="font-medium text-gray-700 mb-2">Items</h4>
-        {items.map((item, index) => (
+        {items && items.map((item, index) => (
           <div key={index} className="flex justify-between items-center mb-2">
-            <span>{item.name} - ${item.price} (Qty: {item.quantity})</span>
-            <button onClick={() => handleRemoveItem(index)} className="text-red-500">Remove</button>
+            <span className='text-gray-800'>{item.name} - ${item.price.toFixed(2)} (Qty: {item.quantity})</span>
+            <button onClick={() => handleRemoveItem(index)} className="text-red-500 hover:text-red-700">Remove</button>
           </div>
         ))}
         <div className="flex mb-4">
@@ -72,21 +77,21 @@ export default function StoreModal({ isOpen, onClose, onSave, store }: StoreModa
             value={newItem.name}
             onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
             placeholder="Item Name"
-            className="flex-grow mr-2 px-3 py-2 border border-gray-300 rounded-md"
+            className="flex-grow mr-2 px-3 py-2 border border-gray-300 rounded-md text-gray-800"
           />
           <input
             type="number"
             value={newItem.price}
             onChange={(e) => setNewItem({ ...newItem, price: parseFloat(e.target.value) })}
             placeholder="Price"
-            className="w-20 mr-2 px-3 py-2 border border-gray-300 rounded-md"
+            className="w-20 mr-2 px-3 py-2 border border-gray-300 rounded-md text-gray-800"
           />
           <input
             type="number"
             value={newItem.quantity}
             onChange={(e) => setNewItem({ ...newItem, quantity: parseInt(e.target.value) })}
             placeholder="Qty"
-            className="w-20 mr-2 px-3 py-2 border border-gray-300 rounded-md"
+            className="w-20 mr-2 px-3 py-2 border border-gray-300 rounded-md text-gray-800"
           />
           <button onClick={handleAddItem} className="bg-blue-500 text-white px-4 py-2 rounded-md">Add</button>
         </div>

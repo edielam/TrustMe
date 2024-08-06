@@ -1,62 +1,110 @@
 // pages/stores.tsx
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Navbar from '@/components/navabr';
 import StoreModal from '@/components/storeModal';
-
-interface Store {
-  id: number;
-  name: string;
-  unique_id: string;
-  items: { id: number; name: string; price: number; quantity: number }[];
-}
+import { toast } from 'react-toastify';
+import { Store, StoreItem } from '@/types/store';
+import { useRouter } from 'next/router';
+import Navbar from '@/components/navabr';
 
 export default function Stores() {
   const [stores, setStores] = useState<Store[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingStore, setEditingStore] = useState<Store | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    fetchStores();
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+    } else {
+      fetchStores();
+    }
   }, []);
 
   const fetchStores = async () => {
-    // In a real application, you would fetch this data from your API
-    const response = await fetch('/api/lists/stores');
-    const data = await response.json();
-    setStores(data);
+    try {
+      setIsLoading(true);
+      const token = localStorage.getItem('token');
+      const response = await fetch('/api/lists/stores', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (!response.ok) throw new Error('Failed to fetch stores');
+      const data = await response.json();
+      setStores(data);
+    } catch (error) {
+      console.error('Error fetching stores:', error);
+      toast.error('Failed to load stores. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleCreateStore = async (storeData: { name: string; items: any[] }) => {
-    // In a real application, you would send this data to your API
-    const response = await fetch('/api/lists/stores', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(storeData),
-    });
-    const newStore = await response.json();
-    setStores([...stores, newStore]);
+  const handleCreateStore = async (storeData: { name: string; items: StoreItem[] }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('/api/lists/stores', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(storeData),
+      });
+      if (!response.ok) throw new Error('Failed to create store');
+      const newStore = await response.json();
+      setStores([...stores, newStore]);
+      toast.success('Store created successfully');
+    } catch (error) {
+      console.error('Error creating store:', error);
+      toast.error('Failed to create store. Please try again.');
+    }
   };
 
-  const handleEditStore = async (storeData: { name: string; items: any[] }) => {
+  const handleEditStore = async (storeData: { name: string; items: StoreItem[] }) => {
     if (!editingStore) return;
-    // In a real application, you would send this data to your API
-    const response = await fetch(`/api/lists/stores/${editingStore.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(storeData),
-    });
-    const updatedStore = await response.json();
-    setStores(stores.map(store => store.id === updatedStore.id ? updatedStore : store));
-    setEditingStore(null);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`/api/lists/stores/${editingStore.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(storeData),
+      });
+      if (!response.ok) throw new Error('Failed to update store');
+      const updatedStore = await response.json();
+      setStores(stores.map(store => store.id === updatedStore.id ? updatedStore : store));
+      setEditingStore(null);
+      toast.success('Store updated successfully');
+    } catch (error) {
+      console.error('Error updating store:', error);
+      toast.error('Failed to update store. Please try again.');
+    }
   };
-
+  
   const handleDeleteStore = async (id: number) => {
-    // In a real application, you would send this request to your API
-    await fetch(`/api/lists/stores/${id}`, { method: 'DELETE' });
-    setStores(stores.filter(store => store.id !== id));
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`/api/lists/stores?id=${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (!response.ok) throw new Error('Failed to delete store');
+      setStores(stores.filter(store => store.id !== id));
+      toast.success('Store deleted successfully');
+    } catch (error) {
+      console.error('Error deleting store:', error);
+      toast.error('Failed to delete store. Please try again.');
+    }
   };
-
+  
   return (
     <div className="min-h-screen bg-gray-100">
       <Head>

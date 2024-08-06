@@ -29,6 +29,7 @@ export default function Login() {
 
     if (response.ok) {
       const data = await response.json()
+      localStorage.setItem('token', data.token);
       console.log('Form submitted:', data)
       // Redirect to the dashboard
       router.push('/dashboard')
