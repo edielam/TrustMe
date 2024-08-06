@@ -31,7 +31,6 @@ export default function Login() {
       const data = await response.json()
       localStorage.setItem('token', data.token);
       console.log('Form submitted:', data)
-      // Redirect to the dashboard
       router.push('/dashboard')
     } else {
       const errorData = await response.json()

@@ -68,7 +68,7 @@ export default function Stores() {
     if (!editingStore) return;
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/lists/stores/${editingStore.id}`, {
+      const response = await fetch(`/api/lists/stores?id=${editingStore.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
