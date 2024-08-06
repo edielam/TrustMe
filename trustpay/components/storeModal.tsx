@@ -49,6 +49,12 @@ export default function StoreModal({ isOpen, onClose, onSave, store }: StoreModa
     onClose();
   };
 
+  useEffect(() => {
+    if (!isOpen) {
+      resetForm();
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
