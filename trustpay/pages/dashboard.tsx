@@ -27,7 +27,7 @@ export default function Home() {
   const [isPayModalOpen, setIsPayModalOpen] = useState(false)
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false)
   const [user, setUser] = useState<User | null>(null);
-  const [trustpayLink, setTrustpayLink] = useState('');
+  // const [trustpayLink, setTrustpayLink] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -87,25 +87,25 @@ export default function Home() {
     fetchUserData();
   }, []);
 
-  useEffect(() => {
-    const fetchTrustpayLink = async () => {
-      const token = localStorage.getItem('token');
-      try {
-        const response = await fetch('/api/auth/trustpaylink', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setTrustpayLink(data.trustpayLink);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    fetchTrustpayLink();
-  })
+  // useEffect(() => {
+  //   const fetchTrustpayLink = async () => {
+  //     const token = localStorage.getItem('token');
+  //     try {
+  //       const response = await fetch('/api/auth/trustpaylink', {
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`,
+  //         },
+  //       });
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setTrustpayLink(data.trustpayLink);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //     }
+  //   };
+  //   fetchTrustpayLink();
+  // })
 
   if (!user) return <div>Loading...</div>;
 
@@ -126,7 +126,8 @@ export default function Home() {
               <img className="h-16 w-16 rounded-full" src="https://raw.githubusercontent.com/edielam/about_me/portfolio/src/assets/b5.png" alt="Profile" />
               <div>
                 <h2 className="text-xl font-semibold text-gray-900">{user.username}</h2>
-                <p className="text-gray-500">{trustpayLink}</p>
+                <p className="text-gray-500">{user.email}</p>
+                {/* <p className="text-gray-500">{trustpayLink}</p> */}
               </div>
             </div>
             <div className="mt-6 flex justify-center space-x-4">
