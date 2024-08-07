@@ -18,20 +18,21 @@ export async function getDb() {
       username TEXT NOT NULL,
       email TEXT UNIQUE NOT NULL,
       password TEXT NOT NULL,
+      profile_image TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
     CREATE TABLE IF NOT EXISTS transactions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      seller_id INTEGER NOT NULL,
-      buyer_id INTEGER NOT NULL,
+      user_id INTEGER NOT NULL,
+      counterparty TEXT NOT NULL,
       amount DECIMAL(10, 2) NOT NULL,
       refundable_amount DECIMAL(10, 2) NOT NULL,
-      status TEXT NOT NULL,
+      type TEXT NOT NULL CHECK (type IN ('sent', 'received')),
+      status TEXT NOT NULL CHECK (status IN ('pending', 'completed', 'failed')),
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (seller_id) REFERENCES users (id),
-      FOREIGN KEY (buyer_id) REFERENCES users (id),
+      FOREIGN KEY (user_id) REFERENCES users (id),
       CONSTRAINT check_amount CHECK (amount > 0),
       CONSTRAINT check_refundable_amount CHECK (refundable_amount >= 0 AND refundable_amount <= amount)
     );

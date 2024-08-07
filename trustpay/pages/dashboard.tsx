@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import { useState } from 'react'
 import '../app/globals.css'
-import Navbar from '@/components/navabr';
+import Navbar from '@/components/navabr'
+import { PayModal, ReceiveModal } from '@/components/payrecModal';
 
 interface Transaction {
   id: number;
@@ -21,6 +21,14 @@ const mockTransactions: Transaction[] = [
 
 export default function Home() {
   const [transactions] = useState<Transaction[]>(mockTransactions)
+  const [isPayModalOpen, setIsPayModalOpen] = useState(false)
+  const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false)
+
+  const handleOpenPayModal = () => setIsPayModalOpen(true)
+  const handleClosePayModal = () => setIsPayModalOpen(false)
+
+  const handleOpenReceiveModal = () => setIsReceiveModalOpen(true)
+  const handleCloseReceiveModal = () => setIsReceiveModalOpen(false)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -53,8 +61,8 @@ export default function Home() {
           <div className="lg:col-span-2 space-y-8">
             {/* Action Buttons */}
             <div className="grid grid-cols-2 gap-4">
-              <ActionButton text="Pay" bgColor="bg-teal-500" hoverColor="hover:bg-teal-600" />
-              <ActionButton text="Receive" bgColor="bg-cyan-600" hoverColor="hover:bg-cyan-700" />
+              <ActionButton text="Pay" bgColor="bg-teal-500" hoverColor="hover:bg-teal-600" onClick={handleOpenPayModal} />
+              <ActionButton text="Receive" bgColor="bg-cyan-600" hoverColor="hover:bg-cyan-700" onClick={handleOpenReceiveModal} />
             </div>
 
             {/* Additional Actions */}
@@ -78,6 +86,10 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      {/* Modals */}
+      <PayModal isOpen={isPayModalOpen} onClose={handleClosePayModal} />
+      <ReceiveModal isOpen={isReceiveModalOpen} onClose={handleCloseReceiveModal} />
     </div>
   )
 }
@@ -86,11 +98,12 @@ interface ActionButtonProps {
   text: string;
   bgColor: string;
   hoverColor: string;
+  onClick: () => void;
 }
 
-function ActionButton({ text, bgColor, hoverColor }: ActionButtonProps) {
+function ActionButton({ text, bgColor, hoverColor, onClick }: ActionButtonProps) {
   return (
-    <button className={`${bgColor} ${hoverColor} text-white font-semibold py-3 px-4 rounded-md shadow-sm transition duration-150 ease-in-out`}>
+    <button onClick={onClick} className={`${bgColor} ${hoverColor} text-white font-semibold py-3 px-4 rounded-md shadow-sm transition duration-150 ease-in-out`}>
       {text}
     </button>
   )

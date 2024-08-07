@@ -15,7 +15,7 @@ export default function Navbar({ activePage = 'home' }: NavbarProps) {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link href="/">
+              <Link href="/dashboard">
                 <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="TrustPay" />
               </Link>
             </div>
@@ -23,7 +23,7 @@ export default function Navbar({ activePage = 'home' }: NavbarProps) {
               <NavLink href="/dashboard" active={activePage === 'home'}>Home</NavLink>
               <NavLink href="/transactions" active={activePage === 'transactions'}>Transactions</NavLink>
               <NavLink href="/stores" active={activePage === 'stores'}>Stores</NavLink>
-              <NavLink href="/settings" active={activePage === 'settings'}>Settings</NavLink>
+              <NavLink href="/profile" active={activePage === 'settings'}>Settings</NavLink>
             </div>
           </div>
           <div className="-mr-2 flex items-center sm:hidden">
