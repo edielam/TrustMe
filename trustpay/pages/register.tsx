@@ -10,11 +10,13 @@ export default function Register() {
     email: '',
     password: '',
     confirmPassword: '',
+    phoneNumber: '',
+    countryCode: '+233', // Default to Ghana
   })
 
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -30,14 +32,12 @@ export default function Register() {
     if (response.ok) {
       const data = await response.json()
       console.log('Form submitted:', data)
-      // Redirect to the login
       router.push('/login')
     } else {
       const errorData = await response.json()
       console.error('Error:', errorData.message)
     }
   }
-
 
   return (
     <div className="bg-gray-50">
@@ -101,6 +101,33 @@ export default function Register() {
                               onChange={handleChange}
                             />
                           </div>
+                          <div className="min-w-0 flex-1 mb-3">
+                          <label htmlFor="countryCode" className="sr-only">Country Code</label>
+                          <select
+                            id="countryCode"
+                            name="countryCode"
+                            required
+                            className="block w-full px-4 py-3 rounded-md border-0 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:ring-offset-gray-900"
+                            value={formData.countryCode}
+                            onChange={handleChange}
+                          >
+                            <option value="+233">Ghana (+233)</option>
+                            {/* Add more country options as needed */}
+                          </select>
+                        </div>
+                        <div className="min-w-0 flex-1 mb-3">
+                          <label htmlFor="phoneNumber" className="sr-only">Phone Number</label>
+                          <input
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            type="tel"
+                            placeholder="Phone Number"
+                            required
+                            className="block w-full px-4 py-3 rounded-md border-0 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:ring-offset-gray-900"
+                            value={formData.phoneNumber}
+                            onChange={handleChange}
+                          />
+                        </div>
                           <div className="min-w-0 flex-1 mb-3">
                             <label htmlFor="email" className="sr-only">Email address</label>
                             <input

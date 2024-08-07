@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import '../app/globals.css'
 import Navbar from '@/components/navabr'
 import { PayModal, ReceiveModal } from '@/components/payrecModal';
+import { User } from './profile';
 
 interface Transaction {
   id: number;
@@ -22,10 +23,10 @@ interface Transaction {
 // ]
 
 export default function Home() {
-  // const [transactions] = useState<Transaction[]>(mockTransactions)
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isPayModalOpen, setIsPayModalOpen] = useState(false)
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false)
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -65,6 +66,26 @@ export default function Home() {
       });
   }, []);
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      const response = await fetch('/api/auth/user', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+  if (!user) return <div>Loading...</div>;
   return (
     <div className="min-h-screen bg-gray-50">
       <Head>
@@ -81,8 +102,8 @@ export default function Home() {
             <div className="flex items-center space-x-4">
               <img className="h-16 w-16 rounded-full" src="https://raw.githubusercontent.com/edielam/about_me/portfolio/src/assets/b5.png" alt="Profile" />
               <div>
-                <h2 className="text-xl font-semibold text-gray-900">John Doe</h2>
-                <p className="text-gray-500">john@example.com</p>
+                <h2 className="text-xl font-semibold text-gray-900">{user.username}</h2>
+                <p className="text-gray-500">{user.email}</p>
               </div>
             </div>
             <div className="mt-6 flex justify-center space-x-4">
@@ -180,19 +201,36 @@ function TransactionItem({ transaction }: TransactionItemProps) {
 }
 
 interface SocialIconProps {
-  icon: string;
-}
+  icon: 'facebook' | 'twitter' | 'linkedin';
+};
 
 function SocialIcon({ icon }: SocialIconProps) {
+  const icons = {
+    facebook: (
+      <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.908v-3.622h2.911V8.413c0-2.888 1.76-4.461 4.33-4.461 1.23 0 2.288.091 2.594.132v3.011l-1.782.001c-1.397 0-1.667.664-1.667 1.637v2.148h3.332l-.435 3.622h-2.897V24h5.675c.73 0 1.323-.593 1.323-1.324V1.325C24 .593 23.407 0 22.675 0z" />
+      </svg>
+    ),
+    twitter: (
+      <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M24 4.557a9.938 9.938 0 01-2.828.775A4.93 4.93 0 0023.337 3.4a9.865 9.865 0 01-3.127 1.195A4.92 4.92 0 0016.62 3c-2.737 0-4.95 2.214-4.95 4.952 0 .388.043.766.127 1.13C7.688 8.894 4.064 6.93 1.64 3.99a4.932 4.932 0 00-.666 2.484c0 1.714.872 3.23 2.188 4.123a4.904 4.904 0 01-2.242-.619v.063c0 2.393 1.704 4.387 3.965 4.837a4.92 4.92 0 01-2.235.085c.63 1.963 2.46 3.392 4.625 3.433a9.868 9.868 0 01-6.102 2.105c-.396 0-.788-.023-1.175-.069a13.94 13.94 0 007.548 2.213c9.057 0 14.008-7.505 14.008-14.008 0-.214-.005-.426-.014-.637A9.978 9.978 0 0024 4.557z" />
+      </svg>
+    ),
+    linkedin: (
+      <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M19.616 3.004H4.383A1.375 1.375 0 003.004 4.383v15.233a1.375 1.375 0 001.379 1.379h15.233a1.375 1.375 0 001.379-1.379V4.383a1.375 1.375 0 00-1.379-1.379zM8.994 19.585H6.243V10.19h2.751v9.395zM7.619 8.902c-.88 0-1.589-.71-1.589-1.588 0-.878.71-1.588 1.589-1.588s1.589.71 1.589 1.588c0 .878-.709 1.588-1.589 1.588zm12.298 10.683h-2.75v-4.56c0-1.09-.02-2.487-1.516-2.487-1.515 0-1.746 1.182-1.746 2.407v4.64H11.154v-9.395h2.636v1.285h.038c.367-.696 1.258-1.43 2.59-1.43 2.768 0 3.278 1.822 3.278 4.194v5.345z" />
+      </svg>
+    ),
+  };
+
   return (
     <a href="#" className="text-gray-400 hover:text-gray-500">
       <span className="sr-only">{icon}</span>
-      <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-        {/* Add appropriate SVG path for each social icon */}
-      </svg>
+      {icons[icon]}
     </a>
-  )
+  );
 }
+
 
 function FundraiseIcon(props: React.SVGProps<SVGSVGElement>) {
   return (

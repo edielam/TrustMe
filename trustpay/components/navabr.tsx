@@ -29,7 +29,7 @@ export default function Navbar({ activePage = 'home' }: NavbarProps) {
             <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
               <NavLink href="/dashboard" active={activePage === 'home'}>Home</NavLink>
               <NavLink href="/transactions" active={activePage === 'transactions'}>Transactions</NavLink>
-              <NavLink href="/stores" active={activePage === 'stores'}>Stores</NavLink>
+              <NavLink href="/stores" active={activePage === 'stores'}>Hustle</NavLink>
               <NavLink href="/profile" active={activePage === 'settings'}>Settings</NavLink>
             </div>
           </div>

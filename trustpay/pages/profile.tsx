@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Navbar from '@/components/navabr';
 
-interface User {
+export interface User {
   id: number;
   username: string;
   email: string;
