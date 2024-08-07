@@ -35,41 +35,55 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   switch (req.method) {
     case 'GET':
+      if (req.query.trustpayLink) {
+        return handleSearch(req, res, db);
+      }
       return handleGet(req, res, db, decodedToken.id);
     case 'POST':
-      return handleProfileImageUpdate(req, res, db, decodedToken.id);
+      return handleProfileUpdate(req, res, db, decodedToken.id);
     default:
       res.setHeader('Allow', ['GET', 'POST']);
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
 
-async function handleGet(req: NextApiRequest, res: NextApiResponse, db: any, userId: number) {
+async function handleSearch(req: NextApiRequest, res: NextApiResponse, db: any) {
+  const { trustpayLink } = req.query;
+  
   try {
-    const user = await db.get('SELECT id, username, email, profile_image FROM users WHERE id = ?', [userId]);
+    const user = await db.get('SELECT id, username, email, profile_image, phone_number, country_code, unique_link FROM users WHERE unique_link = ?', [trustpayLink]);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
     res.status(200).json(user);
   } catch (error) {
-    console.error('Error fetching user:', error);
+    console.error('Error searching for user:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }
 
-async function handleProfileImageUpdate(req: NextApiRequest, res: NextApiResponse, db: any, userId: number) {
-  const { image } = req.body;
-
-  if (!image) {
-    return res.status(400).json({ message: 'Image is required' });
+async function handleGet(req: NextApiRequest, res: NextApiResponse, db: any, userId: number) {
+    try {
+      const user = await db.get('SELECT id, username, email, profile_image, phone_number, country_code, unique_link FROM users WHERE id = ?', [userId]);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.status(200).json(user);
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
   }
 
+async function handleProfileUpdate(req: NextApiRequest, res: NextApiResponse, db: any, userId: number) {
+  const { profile_image, phone_number, country_code } = req.body;
+
   try {
-    await db.run('UPDATE users SET profile_image = ? WHERE id = ?', [image, userId]);
-    const updatedUser = await db.get('SELECT id, username, email, profile_image FROM users WHERE id = ?', [userId]);
+    await db.run('UPDATE users SET profile_image = ?, phone_number = ?, country_code = ? WHERE id = ?', [profile_image, phone_number, country_code, userId]);
+    const updatedUser = await db.get('SELECT id, username, email, profile_image, phone_number, country_code FROM users WHERE id = ?', [userId]);
     res.status(200).json(updatedUser);
   } catch (error) {
-    console.error('Error updating profile image:', error);
+    console.error('Error updating user profile:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }
