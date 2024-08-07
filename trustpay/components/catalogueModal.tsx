@@ -35,7 +35,7 @@ export default function CatalogueModal({ isOpen, onClose, onSave, catalogue }: C
   const resetForm = () => {
     setCatalogueName('');
     setItems([]);
-    setNewItem({ name: '', price: 0, type: 'product', description: '' });
+    setNewItem({ name: '', price: 0, quantity: 0, type: 'product', description: '' });
   };
 
   const handleAddItem = () => {
@@ -73,7 +73,7 @@ export default function CatalogueModal({ isOpen, onClose, onSave, catalogue }: C
         exit={{ scale: 0.9, opacity: 0 }}
         className="p-8 border w-full max-w-md shadow-lg rounded-lg bg-white"
       >
-        <h3 className="text-2xl font-bold text-gray-900 mb-6">
+        {/* <h3 className="text-2xl font-bold text-gray-900 mb-6">
           {catalogue ? 'Edit Catalogue' : 'Create New Catalogue'}
         </h3>
         <input
@@ -82,7 +82,7 @@ export default function CatalogueModal({ isOpen, onClose, onSave, catalogue }: C
           onChange={(e) => setCatalogueName(e.target.value)}
           placeholder="Catalogue Name"
           className="mb-6 w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        /> */}
         <h4 className="font-semibold text-lg text-gray-700 mb-4">Items & Services</h4>
         {items.map((item, index) => (
           <motion.div
@@ -117,6 +117,13 @@ export default function CatalogueModal({ isOpen, onClose, onSave, catalogue }: C
               value={newItem.price}
               onChange={(e) => setNewItem({ ...newItem, price: Math.max(0, parseFloat(e.target.value)) })}
               placeholder="Price"
+              className="w-1/2 mr-2 px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              type="number"
+              value={newItem.quantity}
+              onChange={(e) => setNewItem({ ...newItem, quantity: Math.max(0, parseFloat(e.target.value)) })}
+              placeholder="Quantity/Hours"
               className="w-1/2 mr-2 px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <select
