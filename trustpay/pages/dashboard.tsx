@@ -1,34 +1,69 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../app/globals.css'
 import Navbar from '@/components/navabr'
 import { PayModal, ReceiveModal } from '@/components/payrecModal';
 
 interface Transaction {
   id: number;
-  type: string;
   amount: number;
-  status: string;
+  refundableAmount: number;
+  type: 'sent' | 'received';
+  status: 'pending' | 'completed' | 'failed';
+  counterparty: string;
   date: string;
 }
 
 // Mock data for demonstration
-const mockTransactions: Transaction[] = [
-  { id: 1, type: 'sale', amount: 250.00, status: 'completed', date: '2023-08-01' },
-  { id: 2, type: 'purchase', amount: 120.50, status: 'pending', date: '2023-07-29' },
-  { id: 3, type: 'sale', amount: 75.00, status: 'completed', date: '2023-07-25' },
-]
+// const mockTransactions: Transaction[] = [
+//   { id: 1, type: 'sale', amount: 250.00, status: 'completed', date: '2023-08-01' },
+//   { id: 2, type: 'purchase', amount: 120.50, status: 'pending', date: '2023-07-29' },
+//   { id: 3, type: 'sale', amount: 75.00, status: 'completed', date: '2023-07-25' },
+// ]
 
 export default function Home() {
-  const [transactions] = useState<Transaction[]>(mockTransactions)
+  // const [transactions] = useState<Transaction[]>(mockTransactions)
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isPayModalOpen, setIsPayModalOpen] = useState(false)
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const handleOpenPayModal = () => setIsPayModalOpen(true)
   const handleClosePayModal = () => setIsPayModalOpen(false)
 
   const handleOpenReceiveModal = () => setIsReceiveModalOpen(true)
   const handleCloseReceiveModal = () => setIsReceiveModalOpen(false)
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoading(true);
+    fetch('/api/activity/transaction', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (Array.isArray(data)) {
+          setTransactions(data);
+        } else {
+          throw new Error('Invalid data format');
+        }
+      })
+      .catch(err => {
+        console.error('Fetch error:', err);
+        setError(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">

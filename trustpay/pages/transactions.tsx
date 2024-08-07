@@ -12,13 +12,6 @@ interface Transaction {
     date: string;
   }
 
-// const transactions: Transaction[] = [
-//   { id: '1', type: 'sent', amount: 100, sender: 'John Doe', recipient: 'Jane Smith', date: '2023-08-01 14:30', status: 'completed' },
-//   { id: '2', type: 'received', amount: 50, sender: 'Alice Johnson', recipient: 'John Doe', date: '2023-07-30 09:15', status: 'completed' },
-//   { id: '3', type: 'sent', amount: 75, sender: 'John Doe', recipient: 'Bob Brown', date: '2023-07-28 16:45', status: 'pending' },
-//   { id: '4', type: 'received', amount: 200, sender: 'Eve Wilson', recipient: 'John Doe', date: '2023-07-25 11:00', status: 'completed' },
-//   { id: '5', type: 'sent', amount: 150, sender: 'John Doe', recipient: 'Charlie Davis', date: '2023-07-22 13:20', status: 'failed' },
-// ];
 
 export default function TransactionsPage() {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -30,7 +23,7 @@ export default function TransactionsPage() {
         setIsLoading(true);
         fetch('/api/activity/transaction', {
           headers: {
-            'Authorization': `Bearer ${token}` // Make sure to include the token
+            'Authorization': `Bearer ${token}`
           }
         })
           .then(response => {
