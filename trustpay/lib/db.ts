@@ -60,8 +60,7 @@ export async function getDb() {
       CONSTRAINT check_quantity CHECK (quantity >= 0)
     );
 
-    CREATE INDEX IF NOT EXISTS idx_transactions_seller_id ON transactions(seller_id);
-    CREATE INDEX IF NOT EXISTS idx_transactions_buyer_id ON transactions(buyer_id);
+    CREATE INDEX idx_transactions_user_id ON transactions(user_id);
     CREATE INDEX IF NOT EXISTS idx_stores_user_id ON stores(user_id);
     CREATE INDEX IF NOT EXISTS idx_store_items_store_id ON store_items(store_id);
 

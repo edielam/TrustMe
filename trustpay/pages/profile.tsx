@@ -82,7 +82,7 @@ export default function ProfilePage() {
             <div className="max-w-xl">
               <div className="flex items-center space-x-5">
                 <div className="flex-shrink-0">
-                  <img className="h-24 w-24 rounded-full" src={user.profile_image || '/default-avatar.png'} alt={user.username} />
+                  <img className="h-24 w-24 rounded-full" src={user.profile_image || 'https://www.shareicon.net/data/512x512/2016/07/26/802043_man_512x512.png'} alt={user.username} />
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-gray-900">{user.username}</h2>
