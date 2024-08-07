@@ -36,7 +36,7 @@ export default function Home() {
           {/* Profile Box */}
           <div className="bg-white shadow rounded-lg p-6">
             <div className="flex items-center space-x-4">
-              <img className="h-16 w-16 rounded-full" src="/placeholder-avatar.jpg" alt="Profile" />
+              <img className="h-16 w-16 rounded-full" src="https://raw.githubusercontent.com/edielam/about_me/portfolio/src/assets/b5.png" alt="Profile" />
               <div>
                 <h2 className="text-xl font-semibold text-gray-900">John Doe</h2>
                 <p className="text-gray-500">john@example.com</p>
