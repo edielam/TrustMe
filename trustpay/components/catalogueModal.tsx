@@ -73,10 +73,10 @@ export default function CatalogueModal({ isOpen, onClose, onSave, catalogue }: C
         exit={{ scale: 0.9, opacity: 0 }}
         className="p-8 border w-full max-w-md shadow-lg rounded-lg bg-white"
       >
-        {/* <h3 className="text-2xl font-bold text-gray-900 mb-6">
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">
           {catalogue ? 'Edit Catalogue' : 'Create New Catalogue'}
         </h3>
-        <input
+        {/* <input
           type="text"
           value={catalogueName}
           onChange={(e) => setCatalogueName(e.target.value)}
