@@ -53,6 +53,8 @@ export async function getDb() {
       name TEXT NOT NULL,
       price DECIMAL(10, 2) NOT NULL,
       quantity INTEGER NOT NULL,
+      type TEXT NOT NULL CHECK (type IN ('product', 'service')),
+      description TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (store_id) REFERENCES stores (id),

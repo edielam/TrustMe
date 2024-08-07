@@ -1,14 +1,16 @@
 // types/store.ts
-export interface StoreItem {
+export interface CatalogueItem {
     id?: number;
     name: string;
     price: number;
-    quantity: number;
+    quantity?: number;
+    type: 'product' | 'service';
+    description: string;
   }
   
-  export interface Store {
+  export interface Catalogue {
     id: number;
     name: string;
     unique_id: string;
-    items: StoreItem[];
+    items: CatalogueItem[];
   }
