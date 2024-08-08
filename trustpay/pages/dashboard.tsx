@@ -9,6 +9,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/autoplay';
+import { DisputeModal, FundraiseModal, InvoiceModal } from './modals/features';
 
 
 interface Transaction {
@@ -42,6 +43,20 @@ export default function Home() {
 
   const handleOpenReceiveModal = () => setIsReceiveModalOpen(true)
   const handleCloseReceiveModal = () => setIsReceiveModalOpen(false)
+
+  const [isFundraiseModalOpen, setIsFundraiseModalOpen] = useState(false)
+  const handleOpenFundraiseModal = () => setIsFundraiseModalOpen(true)
+  const handleCloseFundraiseModal = () => setIsFundraiseModalOpen(false)
+
+  const [isInvoiceModalOpen, setIsInvoiceModalOpen] = useState(false);
+  const handleOpenInvoiceModal = () => setIsInvoiceModalOpen(true);
+  const handleCloseInvoiceModal = () => setIsInvoiceModalOpen(false);
+
+  const [isDisputeModalOpen, setIsDisputeModalOpen] = useState(false);
+  const handleOpenDisputeModal = () => setIsDisputeModalOpen(true);
+  const handleCloseDisputeModal = () => setIsDisputeModalOpen(false);
+
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -93,26 +108,6 @@ export default function Home() {
     fetchUserData();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchTrustpayLink = async () => {
-  //     const token = localStorage.getItem('token');
-  //     try {
-  //       const response = await fetch('/api/auth/trustpaylink', {
-  //         headers: {
-  //           'Authorization': `Bearer ${token}`,
-  //         },
-  //       });
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         setTrustpayLink(data.trustpayLink);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error:', error);
-  //     }
-  //   };
-  //   fetchTrustpayLink();
-  // })
-
   if (!user) return <div>Loading...</div>;
 
   return (
@@ -151,9 +146,9 @@ export default function Home() {
             </div> */}
             {/* Additional Actions */}
             <div className="grid grid-rows-3 gap-4 mx-16 mb-4">
-              <IconButton icon={FundraiseIcon} text="Raise Funds" />
-              <IconButton icon={InvoiceIcon} text="Create Invoice" />
-              <IconButton icon={DisputeIcon} text="Resolve Dispute" />
+              <IconButton icon={FundraiseIcon} text="Raise Funds" onClick={handleOpenFundraiseModal}/>
+              <IconButton icon={InvoiceIcon} text="Create Invoice" onClick={handleOpenInvoiceModal} />
+              <IconButton icon={DisputeIcon} text="Resolve Dispute" onClick={handleOpenDisputeModal}/>
             </div>
           </div>
 
@@ -240,6 +235,9 @@ export default function Home() {
       {/* Modals */}
       <PayModal isOpen={isPayModalOpen} onClose={handleClosePayModal} />
       <ReceiveModal isOpen={isReceiveModalOpen} onClose={handleCloseReceiveModal} />
+      <FundraiseModal isOpen={isFundraiseModalOpen} onClose={handleCloseFundraiseModal} />
+      <InvoiceModal isOpen={isInvoiceModalOpen} onClose={handleCloseInvoiceModal} />
+      <DisputeModal isOpen={isDisputeModalOpen} onClose={handleCloseDisputeModal} />
     </div>
   )
 }
@@ -262,11 +260,12 @@ function ActionButton({ text, bgColor, hoverColor, onClick }: ActionButtonProps)
 interface IconButtonProps {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   text: string;
+  onClick: () => void;
 }
 
-function IconButton({ icon: Icon, text }: IconButtonProps) {
+function IconButton({ icon: Icon, text, onClick }: IconButtonProps) {
   return (
-    <button className="flex flex-col items-center justify-center bg-gray-300 hover:bg-gray-400 text-black font-medium py-3 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">
+    <button onClick={onClick} className="flex flex-col items-center justify-center bg-gray-300 hover:bg-gray-400 text-black font-medium py-3 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">
       <Icon className="h-6 w-6 mb-2" />
       {text}
     </button>
