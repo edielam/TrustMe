@@ -166,7 +166,7 @@ export default function Home() {
                   <div className="relative h-full overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-teal-500 to-cyan-600 transform -skew-y-6"></div>
                     <img 
-                      src="/Users/eddie/Desktop/Rust School/TrustMe/trustpay/assets/coins.jpg" 
+                      src="https://raw.githubusercontent.com/edielam/TrustMe/main/trustpay/assets/coins.jpg" 
                       alt="Secure Transactions" 
                       className="absolute top-0 right-0 h-full w-2/3 object-cover transform skew-y-6"
                     />
@@ -180,7 +180,7 @@ export default function Home() {
                   <div className="relative h-full overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-600 to-teal-500 transform -skew-y-6"></div>
                     <img 
-                      src="/path-to-your-image2.jpg" 
+                      src="https://raw.githubusercontent.com/edielam/TrustMe/main/trustpay/assets/mak1.jpg" 
                       alt="Low Fees" 
                       className="absolute top-0 right-0 h-full w-2/3 object-cover transform skew-y-6"
                     />
@@ -194,7 +194,7 @@ export default function Home() {
                   <div className="relative h-full overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-teal-500 to-cyan-600 transform -skew-y-6"></div>
                     <img 
-                      src="/path-to-your-image3.jpg" 
+                      src="https://raw.githubusercontent.com/edielam/TrustMe/main/trustpay/assets/mak2.jpg" 
                       alt="24/7 Support" 
                       className="absolute top-0 right-0 h-full w-2/3 object-cover transform skew-y-6"
                     />
