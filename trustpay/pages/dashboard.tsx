@@ -129,7 +129,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Box */}
           <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-            <div className="relative h-48 bg-gradient-to-r from-teal-500 to-cyan-600">
+            <div className="relative h-32 bg-gradient-to-r from-teal-500 to-cyan-600">
               <img
                 className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 h-32 w-32 rounded-full border-4 border-white shadow-lg"
                 src="https://raw.githubusercontent.com/edielam/about_me/portfolio/src/assets/b5.png"
@@ -150,8 +150,8 @@ export default function Home() {
               <div className="text-lg font-semibold text-gray-900">January 2023</div>
             </div> */}
             {/* Additional Actions */}
-            <div className="grid grid-rows-3 gap-4 mx-16">
-              <IconButton icon={FundraiseIcon} text="Fundraise" />
+            <div className="grid grid-rows-3 gap-4 mx-16 mb-4">
+              <IconButton icon={FundraiseIcon} text="Raise Funds" />
               <IconButton icon={InvoiceIcon} text="Create Invoice" />
               <IconButton icon={DisputeIcon} text="Resolve Dispute" />
             </div>
@@ -228,7 +228,7 @@ export default function Home() {
                 <h3 className="text-lg font-semibold text-gray-900">Recent Transactions</h3>
               </div>
               <div className="divide-y divide-gray-200">
-                {transactions.map((transaction) => (
+                {transactions.slice(0, 3).map((transaction) => (
                   <TransactionItem key={transaction.id} transaction={transaction} />
                 ))}
               </div>
@@ -266,7 +266,7 @@ interface IconButtonProps {
 
 function IconButton({ icon: Icon, text }: IconButtonProps) {
   return (
-    <button className="flex flex-col items-center justify-center bg-cyan-600 hover:bg-cyan-700 text-white-700 font-medium py-3 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">
+    <button className="flex flex-col items-center justify-center bg-gray-300 hover:bg-gray-400 text-black font-medium py-3 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">
       <Icon className="h-6 w-6 mb-2" />
       {text}
     </button>
@@ -285,7 +285,7 @@ function TransactionItem({ transaction }: TransactionItemProps) {
         <p className="text-sm text-gray-500">{transaction.date}</p>
       </div>
       <div className="text-right">
-        <p className="text-sm font-medium text-gray-900">${transaction.amount.toFixed(2)}</p>
+        <p className="text-sm font-medium text-gray-900">GHS {transaction.amount.toFixed(2)}</p>
         <p className={`text-sm ${transaction.status === 'completed' ? 'text-green-600' : 'text-yellow-600'}`}>
           {transaction.status}
         </p>
