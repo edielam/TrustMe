@@ -128,7 +128,7 @@ export function PayModal({ isOpen, onClose }: PayModalProps) {
               animate={{ opacity: 1, y: 0 }}
               className="mb-6 flex items-center space-x-4 bg-gray-100 p-4 rounded-lg"
             >
-              <img src={recipient.profileImage} alt={recipient.username} className="w-16 h-16 rounded-full border-4 border-white shadow-md" />
+              <img src={recipient.profileImage || 'https://raw.githubusercontent.com/edielam/about_me/portfolio/src/assets/b5.png'} alt={recipient.username} className="w-16 h-16 rounded-full border-4 border-white shadow-md" />
               <span className="font-semibold text-gray-800 text-lg">{recipient.username}</span>
             </motion.div>
           )}
