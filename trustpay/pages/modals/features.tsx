@@ -29,14 +29,19 @@ export function FundraiseModal({ isOpen, onClose }: FundsModalProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black bg-opacity-80 overflow-y-auto h-full w-full flex items-center justify-center z-50"
+        className="fixed inset-0 bg-black bg-opacity-80 overflow-y-auto h-full w-full flex items-center justify-center z-50"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <motion.div 
+          className="bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-2xl w-full max-w-md p-8 relative"
+          variants={modalVariants}
           initial="hidden"
           animate="visible"
           exit="exit"
-          variants={modalVariants}
         >
-          <motion.div className="bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-2xl w-full max-w-md p-8 relative">
-            <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+          <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
               <FaTimes size={24} />
             </button>
             <h3 className="text-4xl font-bold text-gray-800 mb-6">Start a Fundraiser</h3>
@@ -137,14 +142,19 @@ export function DisputeModal({ isOpen, onClose }: DisputeModalProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black bg-opacity-80 overflow-y-auto h-full w-full flex items-center justify-center z-50"
+        className="fixed inset-0 bg-black bg-opacity-80 overflow-y-auto h-full w-full flex items-center justify-center z-50"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <motion.div 
+          className="bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-2xl w-full max-w-md p-8 relative"
+          variants={modalVariants}
           initial="hidden"
           animate="visible"
           exit="exit"
-          variants={modalVariants}
         >
-          <motion.div className="bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-2xl w-full max-w-md p-8 relative">
-            <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+          <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
               <FaTimes size={24} />
             </button>
             <h3 className="text-4xl font-bold text-gray-800 mb-6">Resolve Dispute</h3>
@@ -259,12 +269,17 @@ export function InvoiceModal({ isOpen, onClose }: InvoiceModalProps) {
       {isOpen && (
         <motion.div
           className="fixed inset-0 bg-black bg-opacity-80 overflow-y-auto h-full w-full flex items-center justify-center z-50"
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          variants={modalVariants}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
         >
-          <motion.div className="bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-2xl w-full max-w-md p-8 relative">
+          <motion.div 
+            className="bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-2xl w-full max-w-md p-8 relative"
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
             <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
               <FaTimes size={24} />
             </button>
