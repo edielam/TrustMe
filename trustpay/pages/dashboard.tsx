@@ -4,6 +4,12 @@ import '../app/globals.css'
 import Navbar from '@/components/navabr'
 import { PayModal, ReceiveModal } from '@/components/payrecModal';
 import { User } from './profile';
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/autoplay';
+
 
 interface Transaction {
   id: number;
@@ -119,22 +125,87 @@ export default function Home() {
       <Navbar activePage="home" />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Box */}
-          <div className="bg-white shadow rounded-lg p-6">
-            <div className="flex items-center space-x-4">
-              <img className="h-16 w-16 rounded-full" src="https://raw.githubusercontent.com/edielam/about_me/portfolio/src/assets/b5.png" alt="Profile" />
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900">{user.username}</h2>
-                <p className="text-gray-500">{user.email}</p>
-                {/* <p className="text-gray-500">{trustpayLink}</p> */}
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div className="relative h-48 bg-gradient-to-r from-teal-500 to-cyan-600">
+              <img
+                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 h-32 w-32 rounded-full border-4 border-white shadow-lg"
+                src="https://raw.githubusercontent.com/edielam/about_me/portfolio/src/assets/b5.png"
+                alt="Profile"
+              />
+            </div>
+            <div className="pt-16 pb-8 px-6 text-center">
+              <h2 className="text-2xl font-bold text-gray-900">{user.username}</h2>
+              <p className="text-gray-600 mt-1">{user.email}</p>
+              <div className="mt-6 flex justify-center space-x-4">
+                <SocialIcon icon="facebook" />
+                <SocialIcon icon="twitter" />
+                <SocialIcon icon="linkedin" />
               </div>
             </div>
-            <div className="mt-6 flex justify-center space-x-4">
-              <SocialIcon icon="facebook" />
-              <SocialIcon icon="twitter" />
-              <SocialIcon icon="linkedin" />
-            </div>
+            {/* <div className="bg-gray-50 px-6 py-4">
+              <div className="text-sm font-medium text-gray-500">Member since</div>
+              <div className="text-lg font-semibold text-gray-900">January 2023</div>
+            </div> */}
+            {/* News Slider */}
+            <div className="lg:col-span-2 bg-white shadow-lg rounded-lg overflow-hidden">
+              <Swiper
+                pagination={{
+                  dynamicBullets: true,
+                }}
+                autoplay={{
+                  delay: 5000,
+                  disableOnInteraction: false,
+                }}
+                modules={[Pagination, Autoplay]}
+                className="h-48"
+              >
+                <SwiperSlide>
+                  <div className="relative h-full overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-teal-500 to-cyan-600 transform -skew-y-6"></div>
+                    <img 
+                      src="/Users/eddie/Desktop/Rust School/TrustMe/trustpay/assets/coins.jpg" 
+                      alt="Secure Transactions" 
+                      className="absolute top-0 right-0 h-full w-2/3 object-cover transform skew-y-6"
+                    />
+                    <div className="relative z-10 flex flex-col justify-center h-full px-8 text-white">
+                      <h3 className="text-2xl font-bold mb-2">Secure Transactions</h3>
+                      <p>TrustPay ensures your payments are protected with state-of-the-art encryption.</p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="relative h-full overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-600 to-teal-500 transform -skew-y-6"></div>
+                    <img 
+                      src="/path-to-your-image2.jpg" 
+                      alt="Low Fees" 
+                      className="absolute top-0 right-0 h-full w-2/3 object-cover transform skew-y-6"
+                    />
+                    <div className="relative z-10 flex flex-col justify-center h-full px-8 text-white">
+                      <h3 className="text-2xl font-bold mb-2">Low Fees</h3>
+                      <p>Enjoy competitive rates for all your transactions, both domestic and international.</p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="relative h-full overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-teal-500 to-cyan-600 transform -skew-y-6"></div>
+                    <img 
+                      src="/path-to-your-image3.jpg" 
+                      alt="24/7 Support" 
+                      className="absolute top-0 right-0 h-full w-2/3 object-cover transform skew-y-6"
+                    />
+                    <div className="relative z-10 flex flex-col justify-center h-full px-8 text-white">
+                      <h3 className="text-2xl font-bold mb-2">24/7 Support</h3>
+                      <p>Our dedicated team is always ready to assist you with any questions or concerns.</p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              </Swiper>
+            </div> 
           </div>
 
           {/* Main Content */}
