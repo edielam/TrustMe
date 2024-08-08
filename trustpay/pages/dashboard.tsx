@@ -149,6 +149,7 @@ export default function Home() {
               <div className="text-sm font-medium text-gray-500">Member since</div>
               <div className="text-lg font-semibold text-gray-900">January 2023</div>
             </div> */}
+
             {/* News Slider */}
             <div className="lg:col-span-2 bg-white shadow-lg rounded-lg overflow-hidden">
               <Swiper
@@ -160,16 +161,16 @@ export default function Home() {
                   disableOnInteraction: false,
                 }}
                 modules={[Pagination, Autoplay]}
-                className="h-48"
+                className="h-64"
               >
                 <SwiperSlide>
-                  <div className="relative h-full overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-teal-500 to-cyan-600 transform -skew-y-6"></div>
+                  <div className="relative h-full">
                     <img 
                       src="https://raw.githubusercontent.com/edielam/TrustMe/main/trustpay/assets/coins.jpg" 
                       alt="Secure Transactions" 
-                      className="absolute top-0 right-0 h-full w-2/3 object-cover transform skew-y-6"
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60"></div>
                     <div className="relative z-10 flex flex-col justify-center h-full px-8 text-white">
                       <h3 className="text-2xl font-bold mb-2">Secure Transactions</h3>
                       <p>TrustPay ensures your payments are protected with state-of-the-art encryption.</p>
@@ -177,13 +178,13 @@ export default function Home() {
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                  <div className="relative h-full overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-600 to-teal-500 transform -skew-y-6"></div>
+                  <div className="relative h-full">
                     <img 
                       src="https://raw.githubusercontent.com/edielam/TrustMe/main/trustpay/assets/mak1.jpg" 
                       alt="Low Fees" 
-                      className="absolute top-0 right-0 h-full w-2/3 object-cover transform skew-y-6"
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60"></div>
                     <div className="relative z-10 flex flex-col justify-center h-full px-8 text-white">
                       <h3 className="text-2xl font-bold mb-2">Low Fees</h3>
                       <p>Enjoy competitive rates for all your transactions, both domestic and international.</p>
@@ -191,13 +192,13 @@ export default function Home() {
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                  <div className="relative h-full overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-teal-500 to-cyan-600 transform -skew-y-6"></div>
+                  <div className="relative h-full">
                     <img 
                       src="https://raw.githubusercontent.com/edielam/TrustMe/main/trustpay/assets/mak2.jpg" 
                       alt="24/7 Support" 
-                      className="absolute top-0 right-0 h-full w-2/3 object-cover transform skew-y-6"
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60"></div>
                     <div className="relative z-10 flex flex-col justify-center h-full px-8 text-white">
                       <h3 className="text-2xl font-bold mb-2">24/7 Support</h3>
                       <p>Our dedicated team is always ready to assist you with any questions or concerns.</p>
@@ -205,7 +206,8 @@ export default function Home() {
                   </div>
                 </SwiperSlide>
               </Swiper>
-            </div> 
+            </div>
+            
           </div>
 
           {/* Main Content */}
