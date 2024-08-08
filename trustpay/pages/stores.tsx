@@ -22,7 +22,7 @@ export default function Stores() {
     } else {
       fetchCatalogues();
     }
-  }, []);
+  }, [router]);
 
   const fetchCatalogues = async () => {
     try {
