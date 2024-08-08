@@ -149,9 +149,18 @@ export default function Home() {
               <div className="text-sm font-medium text-gray-500">Member since</div>
               <div className="text-lg font-semibold text-gray-900">January 2023</div>
             </div> */}
+            {/* Additional Actions */}
+            <div className="grid grid-rows-3 gap-4 mx-16">
+              <IconButton icon={FundraiseIcon} text="Fundraise" />
+              <IconButton icon={InvoiceIcon} text="Create Invoice" />
+              <IconButton icon={DisputeIcon} text="Resolve Dispute" />
+            </div>
+          </div>
 
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
             {/* News Slider */}
-            <div className="lg:col-span-2 bg-white shadow-lg rounded-lg overflow-hidden">
+            <div className="lg:col-span-2 bg-white shadow-lg rounded-lg overflow-hidden z-0">
               <Swiper
                 pagination={{
                   dynamicBullets: true,
@@ -168,9 +177,9 @@ export default function Home() {
                     <img 
                       src="https://raw.githubusercontent.com/edielam/TrustMe/main/trustpay/assets/coins.jpg" 
                       alt="Secure Transactions" 
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full object-cover z-0"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/50"></div>
                     <div className="relative z-10 flex flex-col justify-center h-full px-8 text-white">
                       <h3 className="text-2xl font-bold mb-2">Secure Transactions</h3>
                       <p>TrustPay ensures your payments are protected with state-of-the-art encryption.</p>
@@ -184,7 +193,7 @@ export default function Home() {
                       alt="Low Fees" 
                       className="absolute inset-0 w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/50"></div>
                     <div className="relative z-10 flex flex-col justify-center h-full px-8 text-white">
                       <h3 className="text-2xl font-bold mb-2">Low Fees</h3>
                       <p>Enjoy competitive rates for all your transactions, both domestic and international.</p>
@@ -198,7 +207,7 @@ export default function Home() {
                       alt="24/7 Support" 
                       className="absolute inset-0 w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/50"></div>
                     <div className="relative z-10 flex flex-col justify-center h-full px-8 text-white">
                       <h3 className="text-2xl font-bold mb-2">24/7 Support</h3>
                       <p>Our dedicated team is always ready to assist you with any questions or concerns.</p>
@@ -207,22 +216,10 @@ export default function Home() {
                 </SwiperSlide>
               </Swiper>
             </div>
-            
-          </div>
-
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
             {/* Action Buttons */}
             <div className="grid grid-cols-2 gap-4">
               <ActionButton text="Pay" bgColor="bg-teal-500" hoverColor="hover:bg-teal-600" onClick={handleOpenPayModal} />
               <ActionButton text="Receive" bgColor="bg-cyan-600" hoverColor="hover:bg-cyan-700" onClick={handleOpenReceiveModal} />
-            </div>
-
-            {/* Additional Actions */}
-            <div className="grid grid-cols-3 gap-4">
-              <IconButton icon={FundraiseIcon} text="Fundraise" />
-              <IconButton icon={InvoiceIcon} text="Create Invoice" />
-              <IconButton icon={DisputeIcon} text="Resolve Dispute" />
             </div>
 
             {/* Recent Transactions */}
@@ -269,7 +266,7 @@ interface IconButtonProps {
 
 function IconButton({ icon: Icon, text }: IconButtonProps) {
   return (
-    <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">
+    <button className="flex flex-col items-center justify-center bg-cyan-600 hover:bg-cyan-700 text-white-700 font-medium py-3 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">
       <Icon className="h-6 w-6 mb-2" />
       {text}
     </button>
