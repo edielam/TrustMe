@@ -1,5 +1,5 @@
 import { useState, useRef  } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, HTMLMotionProps, motion } from 'framer-motion'
 import { FaTimes } from 'react-icons/fa'
 import { FaDownload } from 'react-icons/fa'
 import jsPDF from 'jspdf'
@@ -255,15 +255,28 @@ interface InvoiceModalProps {
   onClose: () => void;
 }
 
-export function InvoiceModal({ isOpen, onClose }: InvoiceModalProps) {
-  const [recipient, setRecipient] = useState('');
-  const [item, setItem] = useState('');
-  const [note, setNote] = useState('');
-  const pdfRef = useRef<HTMLDivElement | null>(null);
+interface FormData {
+  recipient: string;
+  item: string;
+  note: string;
+}
+
+export function InvoiceModal({ isOpen, onClose }: InvoiceModalProps): JSX.Element {
+  const [formData, setFormData] = useState<FormData>({
+    recipient: '',
+    item: '',
+    note: '',
+  });
+  const pdfRef = useRef<HTMLDivElement>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ recipient, item, note });
+    console.log(formData);
     onClose();
   };
 
@@ -273,7 +286,7 @@ export function InvoiceModal({ isOpen, onClose }: InvoiceModalProps) {
       pdf.html(pdfRef.current, {
         callback: (doc) => {
           doc.save('invoice.pdf');
-        }
+        },
       });
     }
   };
@@ -282,116 +295,204 @@ export function InvoiceModal({ isOpen, onClose }: InvoiceModalProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black bg-opacity-80 overflow-y-auto h-full w-full flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black bg-opacity-80 overflow-y-auto h-full w-full flex items-center justify-center z-50 p-4 sm:p-0"
           initial="hidden"
           animate="visible"
           exit="exit"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { duration: 0.3 } },
-            exit: { opacity: 0, transition: { duration: 0.2 } }
-          }}
+          variants={modalVariants}
         >
-          <motion.div className="bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-2xl w-full max-w-lg md:max-w-xl p-6 md:p-8 relative overflow-y-auto max-h-[90%]">
-            <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
-              <FaTimes size={24} />
-            </button>
-            <h3 className="text-3xl font-bold text-gray-800 mb-4">Send Invoice</h3>
-            <form className="text-black space-y-4" onSubmit={handleSubmit}>
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-lg font-medium">Invoice No. 0002</span>
-                  <span className="text-sm">Date: 08/08/2024</span>
-                </div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm">Due: On receipt</span>
-                  <div className="flex space-x-2">
-                    <button type="button" className="text-sm text-blue-600 hover:underline">Edit</button>
-                    <button type="button" className="text-sm text-blue-600 hover:underline">More actions</button>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700" htmlFor="recipient">
-                  Who are you billing?
-                </label>
-                <input
-                  className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-300 focus:border-blue-300 sm:text-sm"
-                  id="recipient"
-                  type="text"
-                  placeholder="Customer name or email"
-                  value={recipient}
-                  onChange={(e) => setRecipient(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700" htmlFor="item">
-                  What are they paying for?
-                </label>
-                <input
-                  className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-300 focus:border-blue-300 sm:text-sm"
-                  id="item"
-                  type="text"
-                  placeholder="Item name"
-                  value={item}
-                  onChange={(e) => setItem(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700" htmlFor="note">
-                  Notes and attachments
-                </label>
-                <textarea
-                  className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-300 focus:border-blue-300 sm:text-sm"
-                  id="note"
-                  placeholder="Note to your customer"
-                  rows={3}
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  maxLength={700}
-                ></textarea>
-              </div>
-              <div className="flex space-x-4">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  type="submit"
-                  className="flex-1 bg-green-600 text-white p-3 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition duration-300"
-                >
-                  Send Invoice
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  type="button"
-                  onClick={onClose}
-                  className="flex-1 bg-gray-300 text-gray-800 p-3 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition duration-300"
-                >
-                  Cancel
-                </motion.button>
-              </div>
-            </form>
-            <div ref={pdfRef} className="mt-8 p-4 bg-white shadow-lg rounded-lg">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Invoice Preview</h3>
-              <p className="text-sm">Invoice No. 0002</p>
-              <p className="text-sm">Date: 08/08/2024</p>
-              <p className="text-sm">Due: On receipt</p>
-              <p className="mt-4 text-lg font-medium">Billing to: {recipient}</p>
-              <p className="mt-2 text-lg font-medium">Item: {item}</p>
-              <p className="mt-4 text-sm">Note: {note}</p>
-              <button
-                onClick={handleDownload}
-                className="mt-6 flex items-center bg-blue-500 text-white p-2 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition duration-300"
-              >
-                <FaDownload className="mr-2" />
-                Download PDF
-              </button>
-            </div>
+          <motion.div className="bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-2xl w-full max-w-lg p-6 sm:p-8 relative">
+            <CloseButton onClose={onClose} />
+            <h3 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-6">Send Invoice</h3>
+            <InvoiceForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} onClose={onClose} />
+            <InvoicePreview formData={formData} pdfRef={pdfRef} handleDownload={handleDownload} />
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+function CloseButton({ onClose }: { onClose: () => void }): JSX.Element {
+  return (
+    <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+      <FaTimes size={24} />
+    </button>
+  );
+}
+
+interface InvoiceFormProps {
+  formData: FormData;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onClose: () => void;
+}
+
+function InvoiceForm({ formData, handleChange, handleSubmit, onClose }: InvoiceFormProps): JSX.Element {
+  return (
+    <form className="space-y-6" onSubmit={handleSubmit}>
+      <InvoiceHeader />
+      <InputField
+        label="Who are you billing?"
+        id="recipient"
+        type="text"
+        placeholder="Customer name or email"
+        value={formData.recipient}
+        onChange={handleChange}
+        required
+      />
+      <InputField
+        label="What are they paying for?"
+        id="item"
+        type="text"
+        placeholder="Item name"
+        value={formData.item}
+        onChange={handleChange}
+        required
+      />
+      <TextAreaField
+        label="Notes and attachments"
+        id="note"
+        placeholder="Note to your customer"
+        value={formData.note}
+        onChange={handleChange}
+        maxLength={700}
+      />
+      <FormButtons onClose={onClose} />
+    </form>
+  );
+}
+
+function InvoiceHeader(): JSX.Element {
+  return (
+    <div>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+        <span className="text-lg font-medium">Invoice No. 0002</span>
+        <span className="text-sm">Date: 08/08/2024</span>
+      </div>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+        <span className="text-sm">Due: On receipt</span>
+        <div className="flex space-x-4 mt-2 sm:mt-0">
+          <button type="button" className="text-sm text-blue-600 hover:underline">Edit</button>
+          <button type="button" className="text-sm text-blue-600 hover:underline">More actions</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface InputFieldProps {
+  label: string;
+  id: string;
+  type: string;
+  placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
+}
+
+function InputField({ label, id, type, placeholder, value, onChange, required }: InputFieldProps): JSX.Element {
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-700" htmlFor={id}>
+        {label}
+      </label>
+      <input
+        className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-300 focus:border-blue-300 sm:text-sm"
+        id={id}
+        name={id}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        required={required}
+      />
+    </div>
+  );
+}
+
+interface TextAreaFieldProps {
+  label: string;
+  id: string;
+  placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  maxLength?: number;
+}
+
+function TextAreaField({ label, id, placeholder, value, onChange, maxLength }: TextAreaFieldProps): JSX.Element {
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-700" htmlFor={id}>
+        {label}
+      </label>
+      <textarea
+        className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-300 focus:border-blue-300 sm:text-sm"
+        id={id}
+        name={id}
+        placeholder={placeholder}
+        rows={3}
+        value={value}
+        onChange={onChange}
+        maxLength={maxLength}
+      ></textarea>
+    </div>
+  );
+}
+
+function FormButtons({ onClose }: { onClose: () => void }): JSX.Element {
+  return (
+    <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+      <MotionButton type="submit" className="bg-green-600 text-white">
+        Send Invoice
+      </MotionButton>
+      <MotionButton type="button" onClick={onClose} className="bg-gray-300 text-gray-800">
+        Cancel
+      </MotionButton>
+    </div>
+  );
+}
+
+interface MotionButtonProps extends HTMLMotionProps<"button"> {
+  className?: string;
+}
+
+function MotionButton({ children, className, ...props }: MotionButtonProps): JSX.Element {
+  return (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className={`flex-1 p-3 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition duration-300 ${className}`}
+      {...props}
+    >
+      {children}
+    </motion.button>
+  );
+}
+
+interface InvoicePreviewProps {
+  formData: FormData;
+  pdfRef: React.RefObject<HTMLDivElement>;
+  handleDownload: () => void;
+}
+
+function InvoicePreview({ formData, pdfRef, handleDownload }: InvoicePreviewProps): JSX.Element {
+  return (
+    <div ref={pdfRef} className="mt-8 p-4 bg-white shadow-lg rounded-lg">
+      <h3 className="text-2xl font-bold text-gray-800 mb-4">Invoice Preview</h3>
+      <p className="text-sm">Invoice No. 0002</p>
+      <p className="text-sm">Date: 08/08/2024</p>
+      <p className="text-sm">Due: On receipt</p>
+      <p className="mt-4 text-lg font-medium">Billing to: {formData.recipient}</p>
+      <p className="mt-2 text-lg font-medium">Item: {formData.item}</p>
+      <p className="mt-4 text-sm">Note: {formData.note}</p>
+      <MotionButton
+        onClick={handleDownload}
+        className="mt-6 flex items-center justify-center bg-blue-500 text-white"
+      >
+        <FaDownload className="mr-2" />
+        Download PDF
+      </MotionButton>
+    </div>
   );
 }
