@@ -256,59 +256,58 @@ interface InvoiceModalProps {
 }
 
 export function InvoiceModal({ isOpen, onClose }: InvoiceModalProps) {
-  const [recipient, setRecipient] = useState('');
-  const [item, setItem] = useState('');
-  const [note, setNote] = useState('');
-  const pdfRef = useRef<HTMLDivElement | null>(null);
+  const [recipient, setRecipient] = useState('')
+  const [item, setItem] = useState('')
+  const [note, setNote] = useState('')
+  const pdfRef = useRef<HTMLDivElement | null>(null)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log({ recipient, item, note });
-    onClose();
-  };
+    e.preventDefault()
+    console.log({ recipient, item, note })
+    onClose()
+  }
 
   const handleDownload = () => {
     if (pdfRef.current) {
-      const pdf = new jsPDF('p', 'pt', 'a4');
+      const pdf = new jsPDF('p', 'pt', 'a4')
       pdf.html(pdfRef.current, {
         callback: (doc) => {
-          doc.save('invoice.pdf');
+          doc.save('invoice.pdf')
         }
-      });
+      })
     }
-  };
+  }
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
           className="fixed inset-0 bg-black bg-opacity-80 overflow-y-auto h-full w-full flex items-center justify-center z-50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div 
+          className="bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-2xl w-full max-w-2xl p-8 relative max-h-[90vh] overflow-y-auto"
+          variants={modalVariants}
           initial="hidden"
           animate="visible"
           exit="exit"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { duration: 0.3 } },
-            exit: { opacity: 0, transition: { duration: 0.2 } }
-          }}
-        >
-          <motion.div className="bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-2xl w-full max-w-lg md:max-w-xl p-6 md:p-8 relative overflow-y-auto max-h-[90%]">
+          >
             <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
               <FaTimes size={24} />
             </button>
-            <h3 className="text-3xl font-bold text-gray-800 mb-4">Send Invoice</h3>
-            <form className="text-black space-y-4" onSubmit={handleSubmit}>
+            <h3 className="text-4xl font-bold text-gray-800 mb-6">Send Invoice</h3>
+            <form className="text-black space-y-6" onSubmit={handleSubmit}>
               <div>
-                <div className="flex justify-between items-center mb-2">
+                <div className="flex justify-between items-center mb-4">
                   <span className="text-lg font-medium">Invoice No. 0002</span>
                   <span className="text-sm">Date: 08/08/2024</span>
                 </div>
-                <div className="flex justify-between items-center mb-2">
+                <div className="flex justify-between items-center mb-4">
                   <span className="text-sm">Due: On receipt</span>
-                  <div className="flex space-x-2">
-                    <button type="button" className="text-sm text-blue-600 hover:underline">Edit</button>
-                    <button type="button" className="text-sm text-blue-600 hover:underline">More actions</button>
-                  </div>
+                  <button type="button" className="text-sm text-blue-600 hover:underline">Edit</button>
+                  <button type="button" className="text-sm text-blue-600 hover:underline">More actions</button>
                 </div>
               </div>
               <div>
@@ -393,5 +392,5 @@ export function InvoiceModal({ isOpen, onClose }: InvoiceModalProps) {
         </motion.div>
       )}
     </AnimatePresence>
-  );
+  )
 }

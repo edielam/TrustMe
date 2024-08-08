@@ -65,7 +65,7 @@ export default function Navbar({ activePage = 'home' }: NavbarProps) {
           <div className="pt-2 pb-3 space-y-1">
             <MobileNavLink href="/dashboard" active={activePage === 'home'}>Home</MobileNavLink>
             <MobileNavLink href="/transactions" active={activePage === 'transactions'}>Transactions</MobileNavLink>
-            <MobileNavLink href="/stores" active={activePage === 'stores'}>Hustle</MobileNavLink>
+            <MobileNavLink href="/stores" active={activePage === 'stores'}>Business</MobileNavLink>
             <MobileNavLink href="/profile" active={activePage === 'settings'}>Settings</MobileNavLink>
             <button
               onClick={handleLogout}
